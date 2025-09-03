@@ -1,3 +1,142 @@
+/* Structure générale */
 body {
-    background-color: skyblue;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background-color: #FFF8F0;
+    color: #333;
+    margin: 0;
+}
+
+/* Header */
+header {
+    background-color: #A5A58D;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.header-logo img {
+    max-width: 48px;
+    height: auto;
+}
+
+header a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+header a:hover {
+    color: #F4F1DE;
+    text-decoration: underline;
+}
+
+/* Navbar */
+.navbar {
+    background-color: transparent;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Main */
+main {
+    flex-grow: 1;
+    background-color: #FFF1E6;
+    padding: 2rem 0;
+}
+
+/* Footer */
+footer {
+    background-color: #EDDCD2;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+    border-top: 1px solid #ccc;
+}
+
+/* Boutons */
+.btn-primary {
+    background-color: #A5A58D;
+    border-color: #A5A58D;
+}
+
+.btn-primary:hover {
+    background-color: #6B705C;
+    border-color: #6B705C;
+}
+
+.btn-danger {
+    background-color: #D62828;
+    border-color: #D62828;
+}
+
+.btn-danger:hover {
+    background-color: #9D0208;
+    border-color: #9D0208;
+}
+
+.btn-secondary {
+    background-color: #B5838D;
+    border-color: #B5838D;
+}
+
+.btn-secondary:hover {
+    background-color: #6A4C93;
+    border-color: #6A4C93;
+}
+
+/* Commentaires */
+.comment {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.comment p {
+    margin: 0.5rem 0;
+}
+
+.comment a {
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: #6A4C93;
+    text-decoration: none;
+}
+
+.comment a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive logo */
+@media (max-width: 768px) {
+    .header-logo {
+        font-size: 1.4rem;
+    }
+
+    .header-logo img {
+        max-width: 36px;
+    }
 }

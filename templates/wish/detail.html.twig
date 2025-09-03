@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="card mt-2 mb-2 w-50 m-auto">
+    <div class="card-body">
+        <h5 class="card-title">{{ wish.title }}</h5>
+        <p class="card-text">[{{ wish.category.name }}]</p>
+        <p class="wish-credit">Created by {{ wish.user.username }} on {{
+            wish.dateCreated|date('Y-m-d') }}</p>
+        {# le filtre nl2br convertit les sauts de ligne du texte en balises
+<br> #}
+        <p class="card-text">{{ wish.description|nl2br }}</p>
+        <p class="card-text text-decoration-underline">Comments :</p>
+        {% for comment in wish.comments %}
+            <div class="border border-1 rounded p-2">
+                <p class="wish-credit">
+                    Created by {{ comment.user.username }} on {{ comment.dateCreated | date('Y-m-d
+H:i:s') }}
+                    {% if app.user and (app.user == comment.user) %}
+                        <a href="{{ path('comment_update', {'id': comment.id }) }}"
+                           class="btn btn-secondary btn-sm"
+                           title="Modify comment">
+                            Modify
+                        </a>
+                    {% endif %}
+                    {% if app.user and (app.user == comment.user or is_granted('ROLE_ADMIN')) %}
+                    <a href="{{ path('comment_delete', {'id': comment.id, 'token':csrf_token('delete'~comment.id) }) }}"
+                       class="btn btn-danger btn-sm"
+                       title="Delete comment">
+                        Delete
+                    </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+        <div class="text-center">
+            {# ... #}
+            <a href="{{ path('comment_create', {'id': wish.id }) }}"
+               class="btn btn-primary mt-2" title="Add a comment">
+                Add a comment
+            </a>
+        </div>
+        <div class="text-center">
+            {% if app.user == wish.user or is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('wish_delete', {'id': wish.id, 'token':
+                csrf_token('delete'~wish.id)}) }}"
+               class="btn btn-danger mt-2"
+               title="Delete the wish">
+                Delete
+            </a>
+            {% endif %}
+            {% if app.user == wish.user %}
+            <a href="{{ path('wish_update', {'id': wish.id}) }}"
+               class="btn btn-secondary mt-2"
+               title="Modify the wish">
+                Modify
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
