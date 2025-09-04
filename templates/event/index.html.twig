@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<h1>Événements à {{ city }} le {{ date }}</h1>
+
+<form method="get">
+    <input type="text" name="city" placeholder="Ville" value="{{ city }}">
+    <input type="date" name="date" value="{{ date }}">
+    <button type="submit">Rechercher</button>
+</form>
+
+{% for event in events %}
+    <div class="event">
+        <h2>{{ event.fields.title_fr }}</h2>
+        <img src="{{ event.fields.thumbnail }}" alt="Image de l'événement">
+        <p><strong>Date :</strong> {{ event.fields.daterange_fr }}</p>
+        <p><strong>Lieu :</strong> {{ event.fields.location_name }} - {{ event.fields.location_address }}</p>
+        <p>{{ event.fields.description_fr|raw }}</p>
+        <a href="{{ event.fields.canonicalurl }}" target="_blank">Voir l'événement</a>
+    </div>
+{% else %}
+    <p>Aucun événement trouvé.</p>
+{% endfor %}
+{% endblock %}
