@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
+use App\Service\Censurator;
 final class WishController extends AbstractController
 {
     #[Route('/wish', name: 'app_wish')]
@@ -48,7 +48,7 @@ final class WishController extends AbstractController
 }
 
     #[Route('/wishes/create', name: 'wish_create', methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, Censurator $censurator): Response
     {
         $wish = new Wish();
         $wish->setUser($this->getUser());
@@ -60,6 +60,9 @@ final class WishController extends AbstractController
         if ($wishForm->isSubmitted() && $wishForm->isValid()) {
 // hydrate les propriétés absentes du formulaire
             $wish->setIsPublished(true);
+            $originalDescription = $wish->getDescription();
+            $cleanDescription = $censurator->purify($originalDescription);
+            $wish->setDescription($cleanDescription);
 // sauvegarde en bdd
             $em->persist($wish);
             $em->flush();
@@ -122,7 +125,9 @@ final class WishController extends AbstractController
         }
         if ($this->isCsrfTokenValid('delete'.$id, $request->query->get('token'),)) {
             $em->remove($wish, true);
+            $em->flush();
             $this->addFlash('success', 'This wish has been deleted');
+
         }
         else {
             $this->addFlash('danger', 'This wish cannot be deleted');
